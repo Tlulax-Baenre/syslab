@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1698770754 source:c:\users\usuario\documents\syslab\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<conio.h>
+
