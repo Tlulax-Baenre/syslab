@@ -3,6 +3,8 @@
 #include <string.h>
 #include <ctype.h>
 #include <conio.h>
+#include "Usuarios.h"
+
 
 #define archivoIngreso "\archivos\ingresos.bin"
 
@@ -10,72 +12,24 @@
 
 #define archivoUsuarios "\archivos\usuarios.bin"
 
-typedef struct
-{
-     int nroPractica;
-    char nombrePractica[30];
-    int eliminado;
-} Practica;
 
-
-typedef struct
-{
-    int nroIngreso;
-    char fechaIngreso[10];
-    char fechaRetiro[10];
-    int DNI;
-    int Matricula;
-    int eliminado;
-    ///int numPractica[20];   Se borro numero practica y se anido la estructura Practica
-    Practica practica[20];   ///Es un arreglo de practicas
-    int cantPracticas;///    Se iguala a los validos al momento de la carga de las practicas, asi se saben la cantidad para mostrarlas.
-} IngresoLab;
-
-
-typedef struct
-{
-    char apellidoYnombre[40];
-    int edad;
-    int DNI;
-    char direccion[30];
-    char Telefono[15];
-    int eliminado;
-} Paciente;
-
-typedef struct
-{
-    int DNI;
-    char apellidoYnombre[40];
-    char usuario[20];
-    char contrasenia[20];
-    char perfil[20];
-    int permisos;
-} Empleado;
-
-typedef struct
-{
-    int nroIngreso;
-    int nroPractica;
-    char resultado[30];
-} resultados;
 
 /// PROTOTIPADO ///
 
-Empleado crearUsuario();
-IngresoLab crearIngreso();
-Practica buscaPractica(int numero);
+
 
 int main()
 {
-    //crearUsuario();
-    //crearIngreso();
-    muestraPracticas();
-    //Practica esaPractica;
-    //esaPractica=buscaPractica(143);
-    //crearIngreso();
-    //mostrarArchivoIngresos();
+    printf("\t\t\t Bienvenidos a SysLab \n\n\n");
+
+   // crearAdmin();
+    //login();
+    muestraArchivoPacientes();
     //muestraPracticas();
-    //muestraUnaPractica(esaPractica.nroPractica,esaPractica.nombrePractica);
+
+    //mostrarArchivoIngresos();
+
+
 
     return 0;
 }
@@ -102,6 +56,20 @@ void crearAdmin() ///Crea a los admin
     strcpy(Admin3.contrasenia,"lauti17");
     Admin3.DNI=46012767;
     Admin3.permisos=0;
+    FILE* bufferAdmin=fopen("usuarios.bin","ab");
+
+    if(bufferAdmin)
+    {
+        fwrite(&Admin1,sizeof(Empleado),1,bufferAdmin);
+        fwrite(&Admin2,sizeof(Empleado),1,bufferAdmin);
+        fwrite(&Admin3,sizeof(Empleado),1,bufferAdmin);
+        fclose(bufferAdmin);
+    }
+    else
+    {
+        printf("No se ha podido crear el archivo\n");
+    }
+
 }
 
 
@@ -113,7 +81,7 @@ Empleado crearUsuario() /// Crea un Usuario
     gets(unEmpleado.apellidoYnombre);
     printf("Por favor ingrese el DNI del empleado \n");
     fflush(stdin);
-    gets(unEmpleado.DNI);
+    scanf("%d",&unEmpleado.DNI);
     printf("Por favor ingrese el password del usuario \n");
     fflush(stdin);
     gets(unEmpleado.contrasenia);
@@ -135,6 +103,7 @@ IngresoLab crearIngreso() ///Crea un ingreso
     printf("Por favor ingrese el DNI del paciente \n");
     fflush(stdin);
     scanf("%d",&unIngreso.DNI);
+
     agregarPaciente(unIngreso.DNI);
 
     printf("Por favor ingrese la matricula del profesional solicitante \n ");
@@ -161,13 +130,13 @@ IngresoLab crearIngreso() ///Crea un ingreso
         fflush(stdin);
         scanf("%c",&seguir);
     }
+
     unIngreso.cantPracticas=i;
     printf("Ingrese la fecha estimada de retiro \n");
     fflush(stdin);
     gets(unIngreso.fechaRetiro);
 
     unIngreso.nroIngreso=cuentaRegistros()+1;
-
     muestraIngreso(unIngreso);
     cargarIngresoArchivo(unIngreso);
 
@@ -178,7 +147,7 @@ IngresoLab crearIngreso() ///Crea un ingreso
 int cuentaRegistros() /// Cuenta la cantidad de registros en el archivo
 {
     int cantRegistros=0;
-    FILE* archivo=fopen(archivoIngreso,"rb");
+    FILE* archivo=fopen("ingresos.bin","rb");
     if(archivo)
     {
         fseek(archivo,0,SEEK_END);
@@ -190,41 +159,55 @@ int cuentaRegistros() /// Cuenta la cantidad de registros en el archivo
 
 Paciente cargarPaciente(int dni) /// Carga Pacientes
 {
+
     Paciente nuevoPaciente;
     nuevoPaciente.DNI=dni;
+
     printf("El DNI ingresado no se encuentra asociado a ningun paciente cargado con anterioridad porfavor carge los datos del nuevo paciente.\n\n");
     printf("Ingrese el apellido y nombre del paciente: ");
+
     fflush(stdin);
     gets(nuevoPaciente.apellidoYnombre);
+
     printf("ingrese la edad del paciente: ");
     fflush(stdin);
-    scanf("%i",&nuevoPaciente.edad);
+    scanf("%d",&nuevoPaciente.edad);
+
     printf("Ingrese la direccion del paciente: ");
     fflush(stdin);
     gets(nuevoPaciente.direccion);
+
     printf("Ingrese un numero telefonico: ");
     fflush(stdin);
     gets(nuevoPaciente.Telefono);
+
     return nuevoPaciente;
 }
 
 void agregarPaciente(int dni) /// Agrega Pacientes al archivo de pacientes
 {
-    FILE *archi=fopen(archivoPacientes,"r+b");
+
+    FILE *archi=fopen("archivoPacientes.bin","r+b");
     Paciente aux, aux1;
+
+    int flag=0;
     if(archi)
     {
-        while(!feof(archi)&&dni!=aux.DNI)
+        while(fread(&aux,sizeof(Paciente),1,archi)>0&& flag==0)
         {
-            fread(&aux,sizeof(Paciente),1,archi);
+            if(aux.DNI==dni)
+            {
+                flag=1;
+            }
         }
-        if(feof(archi))
+        if(flag==0)
         {
             fseek(archi,0,SEEK_END);
-//            aux1=cargarPaciente();
+            aux1=cargarPaciente(dni);
             fwrite(&aux1,sizeof(Paciente),1,archi);
         }
         fclose(archi);
+
     }
 }
 
@@ -281,6 +264,7 @@ void muestraIngreso(IngresoLab unIngreso) /// Muestra un ingreso
     printf("Matricula del Profesional: %d \n",unIngreso.Matricula);
     printf("Fecha de Ingreso: %s \n",unIngreso.fechaIngreso);
     printf("Num Ingreso: %d \n",unIngreso.nroIngreso);
+
     for(int i=0;i<unIngreso.cantPracticas;i++)
     {
         muestraUnaPractica(unIngreso.practica[i].nroPractica, unIngreso.practica[i].nombrePractica);
@@ -318,4 +302,50 @@ void mostrarArchivoIngresos()  /// Carga un ingreso en un archivo de Ingresos
     {
         printf("No se pudo abrir el archivo\n");
     }
+}
+
+void cargaEmpleadoArchivo()
+{
+    FILE* elbuffer=fopen("usuarios.bin","ab");
+    Empleado aux;
+    aux=crearUsuario();
+    if(elbuffer)
+    {
+        fwrite(&aux,sizeof(Empleado),1,elbuffer);
+        fclose(elbuffer);
+    }
+    else
+    {
+        printf("No se pudo abrir el archivo \n");
+    }
+}
+
+
+void muestraArchivoPacientes()
+{
+    FILE* elbuffer=fopen("archivoPacientes.bin","rb");
+    Paciente aux;
+    if(elbuffer)
+    {
+        while(fread(&aux,sizeof(Paciente),1,elbuffer)>0)
+        {
+            muestraUnPaciente(aux);
+        }
+        fclose(elbuffer);
+    }
+    else
+    {
+        printf("No se puede abrir el archivo \n");
+    }
+}
+
+void muestraUnPaciente(Paciente elPaciente)
+{
+    printf("//////////////////////////////////////////////////\n");
+    printf("Apellido y Nombre: %s\n",elPaciente.apellidoYnombre);
+    printf("Direccion: %s\n",elPaciente.direccion);
+    printf("DNI: %d \n",elPaciente.DNI);
+    printf("Edad: %d \n",elPaciente.edad);
+    printf("Num de Telefono: %s \n",elPaciente.Telefono);
+    printf("//////////////////////////////////////////////////\n\n");
 }

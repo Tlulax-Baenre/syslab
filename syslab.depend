@@ -6,3 +6,21 @@
 	<ctype.h>
 	<conio.h>
 
+1698863008 source:c:\users\usuario\downloads\syslab-ramaprincipal\syslab-ramaprincipal\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<conio.h>
+	"Usuarios.h"
+
+1698856890 c:\users\usuario\downloads\syslab-ramaprincipal\syslab-ramaprincipal\usuarios.h
+
+1698863100 source:c:\users\usuario\downloads\syslab-ramaprincipal\syslab-ramaprincipal\usuarios.c
+	"Usuarios.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<conio.h>
+
