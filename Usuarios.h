@@ -13,8 +13,10 @@ typedef struct
 typedef struct
 {
     int nroIngreso;
-    char fechaIngreso[10];
-    char fechaRetiro[10];
+    //char fechaIngreso[10]; /// Evaluar cmabiar las fechas por un arreglo de enteros de tamaño 3: Ej: Fecha[2]: Fecha[0]=Dia, Fecha[2]=mes, Fecha[2]=Año,
+    //char fechaRetiro[10];
+    int fechaIngreso[2];
+    int fechaRetiro[2];
     int DNI;
     int Matricula;
     int eliminado;

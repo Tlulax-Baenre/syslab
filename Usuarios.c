@@ -107,7 +107,7 @@ void MenuEmpleado(Empleado elEmpleado)
     {
         printf("Bienvenido a Syslab, %s",elEmpleado.apellidoYnombre);
         printf("Por Favor ingrese la opcion deseada \n\n");
-        printf("1)Crear un Ingreso\n");
+        printf("1)Crear un Ingreso 2)Mostrar Archivo de Ingresos\n");
 
         fflush(stdin);
         scanf("%d",&opcion);
@@ -118,7 +118,7 @@ void MenuEmpleado(Empleado elEmpleado)
             crearIngreso();
             break;
         case 2:
-            printf("En construccion! =) \n");
+            mostrarArchivoIngresos();
             break;
         case 3:
             printf("En construccion! =) \n");

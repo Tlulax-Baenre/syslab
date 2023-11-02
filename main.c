@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <conio.h>
 #include "Usuarios.h"
+#include "calendario.h"
 
 
 #define archivoIngreso "\archivos\ingresos.bin"
@@ -20,11 +21,13 @@
 
 int main()
 {
+    int dia, mes, anio;
+    obtenerFechaHoraActual(&dia,&mes,&anio);
     printf("\t\t\t Bienvenidos a SysLab \n\n\n");
 
    // crearAdmin();
-    //login();
-    muestraArchivoPacientes();
+    login();
+    //muestraArchivoPacientes();
     //muestraPracticas();
 
     //mostrarArchivoIngresos();
@@ -109,11 +112,13 @@ IngresoLab crearIngreso() ///Crea un ingreso
     printf("Por favor ingrese la matricula del profesional solicitante \n ");
     fflush(stdin);
     scanf("%d",&unIngreso.Matricula);
-
+    /*
     printf("Por favor ingrese la fecha de ingreso \n");
     fflush(stdin);
     gets(unIngreso.fechaIngreso);
-
+    */
+    obtenerFechaHoraActual(&unIngreso.fechaIngreso[0],&unIngreso.fechaIngreso[1],&unIngreso.fechaIngreso[2]);
+    printf("Fecha de Ingreso %d %d %d",unIngreso.fechaIngreso[0],unIngreso.fechaIngreso[1],unIngreso.fechaIngreso[2]);
     while(seguir=='s' && i<20)
     {
         printf("Por favor ingrese el ID de la practica \n");
@@ -134,7 +139,8 @@ IngresoLab crearIngreso() ///Crea un ingreso
     unIngreso.cantPracticas=i;
     printf("Ingrese la fecha estimada de retiro \n");
     fflush(stdin);
-    gets(unIngreso.fechaRetiro);
+    //gets(unIngreso.fechaRetiro);
+    ingresarFechaRetiroEstudio(&unIngreso.fechaRetiro[0],&unIngreso.fechaRetiro[1],&unIngreso.fechaRetiro[2]);
 
     unIngreso.nroIngreso=cuentaRegistros()+1;
     muestraIngreso(unIngreso);
@@ -262,8 +268,9 @@ void muestraIngreso(IngresoLab unIngreso) /// Muestra un ingreso
 {
     printf("DNI: %d \n",unIngreso.DNI);
     printf("Matricula del Profesional: %d \n",unIngreso.Matricula);
-    printf("Fecha de Ingreso: %s \n",unIngreso.fechaIngreso);
+    printf("Fecha de Ingreso: %d/%d/%d \n",unIngreso.fechaIngreso[0],unIngreso.fechaIngreso[1],unIngreso.fechaIngreso[2]);
     printf("Num Ingreso: %d \n",unIngreso.nroIngreso);
+    printf("Fecha de Egreso: %d/%d/%d \n",unIngreso.fechaRetiro[0],unIngreso.fechaRetiro[1],unIngreso.fechaRetiro[2]);
 
     for(int i=0;i<unIngreso.cantPracticas;i++)
     {
