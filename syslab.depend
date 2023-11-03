@@ -24,7 +24,7 @@
 	<ctype.h>
 	<conio.h>
 
-1698935348 source:c:\users\lucho\documents\github\syslab\main.c
+1699020191 source:c:\users\lucho\documents\github\syslab\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -33,21 +33,30 @@
 	"Usuarios.h"
 	"calendario.h"
 
-1698934743 c:\users\lucho\documents\github\syslab\usuarios.h
+1699013319 c:\users\lucho\documents\github\syslab\usuarios.h
 
 1698934422 c:\users\lucho\documents\github\syslab\calendario.h
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
 
-1698935395 source:c:\users\lucho\documents\github\syslab\usuarios.c
+1699019814 source:c:\users\lucho\documents\github\syslab\usuarios.c
 	"Usuarios.h"
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<ctype.h>
 	<conio.h>
+	"listasYArboles.h"
 
 1698934273 source:c:\users\lucho\documents\github\syslab\calendario.c
 	"calendario.h"
+
+1699020632 source:c:\users\lucho\documents\github\syslab\listasyarboles.c
+	"listasYArboles.h"
+	<stdlib.h>
+	<stdio.h>
+
+1699019795 c:\users\lucho\documents\github\syslab\listasyarboles.h
+	"Usuarios.h"
 

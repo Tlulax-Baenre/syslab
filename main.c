@@ -17,7 +17,12 @@
 
 /// PROTOTIPADO ///
 
-
+void muestraUnPaciente(Paciente elPaciente);
+void cargarIngresoArchivo(IngresoLab unIngreso);  /// Carga un ingreso en un archivo de Ingresos;
+void muestraIngreso(IngresoLab unIngreso); /// Muestra un ingreso
+void muestraUnaPractica(int numero, char practica[]);  /// Muestra una Practica
+void agregarPaciente(int dni); /// Agrega Pacientes al archivo de pacientes
+int cuentaRegistros(); /// Cuenta la cantidad de registros en el archivo
 
 int main()
 {

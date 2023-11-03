@@ -4,6 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <conio.h>
+#include "listasYArboles.h"
 
 void login()
 {
@@ -100,6 +101,10 @@ Empleado compruebaEmpleado(Empleado unEmpleado, int* logeado)
 void MenuEmpleado(Empleado elEmpleado)
 {
 
+    NodoArbol* elArbol;
+    elArbol=inicializarArbol();
+    elArbol=cargarArbol();
+
     int opcion;
     char continuar='s';
 
@@ -144,6 +149,12 @@ void MenuAdmin(Empleado elAdmin)
     int opcion;
     char continuar='s';
 
+
+    /// SE CREA EL ARBOL CON LOS PACIENTES, SE INICIALIZA Y CARGA CON LOS PACIENTES QUE CONTIENE EL ARCHIVO DE PACIENTES.
+    NodoArbol* elArbol;
+    elArbol=inicializarArbol();
+    elArbol=cargarArbol(elArbol);
+
     do
     {
         printf("\t\tBienvenido a Syslab, Admin %s\n\n",elAdmin.apellidoYnombre);
@@ -159,7 +170,7 @@ void MenuAdmin(Empleado elAdmin)
             gestionDeUsuarios(elAdmin);
             break;
         case 2:
-            printf("En construccion! =) \n");
+            mostrarPacientesRecursivos(elArbol);
             break;
         case 3:
             printf("En construccion! =) \n");
@@ -183,12 +194,12 @@ void MenuAdmin(Empleado elAdmin)
 void gestionDeUsuarios(Empleado elAdmin)
 {
     int opcion;
-        printf("\t\tBienvenido a Syslab, Admin %s\n\n",elAdmin.apellidoYnombre);
-        printf("Por Favor ingrese la opcion deseada \n\n");
-        printf("1)Crear Usuario\n2)Modificar Usuario\n3)Listado de Usuarios\n");
+    printf("\t\tBienvenido a Syslab, Admin %s\n\n",elAdmin.apellidoYnombre);
+    printf("Por Favor ingrese la opcion deseada \n\n");
+    printf("1)Crear Usuario\n2)Modificar Usuario\n3)Listado de Usuarios\n");
 
-        fflush(stdin);
-        scanf("%d",&opcion);
+    fflush(stdin);
+    scanf("%d",&opcion);
     switch(opcion)
     {
     case 1:
@@ -208,3 +219,4 @@ void gestionDeUsuarios(Empleado elAdmin)
         break;
     }
 }
+
